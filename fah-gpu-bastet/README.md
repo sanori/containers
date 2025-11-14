@@ -8,10 +8,15 @@
   - [x] How to connect with login
   - [ ] How to connect without login
 - [ ] Writing documents
+  - [ ] Bastet test
+- [ ] Refactor ROCm installation
+  - [ ] Investigate ROCm-docker
+  - [ ] Investigate whether the image size can be further reduced
+- [ ] docker-compose.yml instead of docker run
 
 ## Goals
 - Latest Docker image for the new FAH client, bastet (v8.x)
-- Support for nVidia, AMD and both
+- Support for nVidia, AMD or both
 - Provides a sanbox testing environment for the new FAH client and core
 
 ## Notes
