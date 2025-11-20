@@ -1,9 +1,11 @@
 .PHONY: help build push dev test test-env
 
 # Docker image name and tag
-IMAGE:=sanori/fah-gpu-bastet
+IMAGE:=foldingathome/fah-gpu-bastet
 TAG?=latest
 VERSION:=25.11.0
+CUDA_RELEASE=11.7.1
+ROCM_RELEASE=6.4.4
 # Shell that make should use
 SHELL:=bash
 
@@ -14,9 +16,21 @@ help:
 clean: ## Make clean the build environment
 	docker image prune
 
-image: DARGS?=--pull --build-arg version=$(VERSION)
+image: DARGS?=--pull --build-arg CUDA_RELEASE=$(CUDA_RELEASE) --build-arg ROCM_RELEASE=$(ROCM_RELEASE)
 image: ## Make the latest build of the image
-	docker build $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) -t $(IMAGE):$(VERSION) .
+	docker build $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) -t $(IMAGE):$(VERSION) \
+	-t $(IMAGE):cuda$(CUDA_RELEASE)-rocm$(ROCM_RELEASE) \
+	-t $(IMAGE):$(VERSION)-cuda$(CUDA_RELEASE)-rocm$(ROCM_RELEASE) .
+
+nvidia-image: DARGS?=--pull --build-arg CUDA_RELEASE=$(CUDA_RELEASE)
+nvidia-image: ## Make nVidia image
+	docker build -f Dockerfile.nvidia $(DARGS) --rm --force-rm \
+	-t $(IMAGE):cuda$(CUDA_RELEASE) -t $(IMAGE):$(VERSION)-cuda$(CUDA_RELEASE) .
+
+amd-image: DARGS?=--pull --build-arg ROCM_RELEASE=$(ROCM_RELEASE) 
+amd-image: ## Make AMD image
+	docker build -f Dockerfile.amd $(DARGS) --rm --force-rm \
+	-t $(IMAGE):rocm$(ROCM_RELEASE) -t $(IMAGE):$(VERSION)-rocm$(ROCM_RELEASE) .
 
 shell: ## Run the image and enter to the bash
 	docker run -it --rm --gpus all --device=/dev/kfd --device=/dev/dri --security-opt seccomp=unconfined \
