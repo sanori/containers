@@ -24,6 +24,7 @@ RUN apt-get update \
       rocm-opencl-runtime \
       rocm-smi-lib \
       rocminfo \
+      ocl-icd-opencl-dev \
     # add users and groups to properly install fah-client.deb
     && useradd -ms /bin/bash fah-client \
     && groupadd -r render \

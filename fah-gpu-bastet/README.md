@@ -15,7 +15,7 @@
   - [x] Investigate ROCm-docker
   - [x] Investigate whether the image size can be further reduced
 - [x] docker-compose.yml instead of docker run
-- [ ] Make rocm only image support OpenCL
+- [x] Make rocm only image support OpenCL
 
 ## Goals
 - Latest Docker image for the new FAH client, bastet (v8.x)
