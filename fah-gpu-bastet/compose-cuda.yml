@@ -1,0 +1,20 @@
+services:
+  fah0:
+    image: foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda
+    build:
+      context: .
+      dockerfile: Dockerfile.nvidia
+      args:
+        CUDA_RELEASE: "${CUDA_RELEASE:-11.7.1}"
+      tags:
+        - "foldingathome/fah-gpu-bastet:cuda${CUDA_RELEASE:-11.7.1}"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda${CUDA_RELEASE:-11.7.1}"
+    ports:
+      - "7396:7396"
+    # Options for nVidia CUDA
+    gpus: all
+    # Options for setting local directory
+    # user: "$(id -u):$(id -g)"
+    # volumes:
+    #  - "/etc/machine-id:/etc/machine-id:ro"
+    #  - "${HOME}/fah:/fah"
