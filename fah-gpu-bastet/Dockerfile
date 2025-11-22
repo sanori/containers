@@ -10,16 +10,16 @@ ARG ROCM_RELEASE=7.1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-      ocl-icd-opencl-dev \
-      clinfo \
       kmod \
       polkitd \
       python3 \
       python3-websocket \
       curl \
-    # point at lib mapped in by container runtime
+    # setup OpenCL ICD for nVidia
     && mkdir -p /etc/OpenCL/vendors \
     && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd \
+    # create libOpenCL.so instead of install ocl-icd-opencl-dev
+    && ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so \
     # get ROCm OpenCL runtime packages
     && curl -sL https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - \
     && printf "deb [arch=amd64] https://repo.radeon.com/rocm/apt/${ROCM_RELEASE}/ jammy main" \
