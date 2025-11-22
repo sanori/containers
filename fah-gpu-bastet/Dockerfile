@@ -21,9 +21,12 @@ RUN apt-get update \
     # create libOpenCL.so instead of install ocl-icd-opencl-dev
     && ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so \
     # get ROCm OpenCL runtime packages
-    && curl -sL https://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - \
-    && printf "deb [arch=amd64] https://repo.radeon.com/rocm/apt/${ROCM_RELEASE}/ jammy main" \
+    && mkdir -p --mode=0755 /etc/apt/keyrings \
+    && curl -sL https://repo.radeon.com/rocm/rocm.gpg.key | gpg --dearmor > /etc/apt/keyrings/rocm.gpg \
+    && printf "deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] https://repo.radeon.com/rocm/apt/${ROCM_RELEASE}/ jammy main" \
         | tee /etc/apt/sources.list.d/rocm.list \
+    && printf 'Package: *\nPin: release o=repo.radeon.com\nPin-Priority: 600' \
+        | tee /etc/apt/preferences.d/rocm-pin-600 \
     && apt-get update && apt-get install -y --no-install-recommends \
       rocm-opencl-runtime \
       rocm-smi-lib \
