@@ -5,7 +5,7 @@
 FROM ubuntu:22.04
 LABEL description="Folding@home AMD ROCm Container for Bastet"
 
-ARG ROCM_RELEASE=7.1
+ARG ROCM_RELEASE=6.4.4
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -24,7 +24,8 @@ RUN apt-get update \
       rocm-opencl-runtime \
       rocm-smi-lib \
       rocminfo \
-      ocl-icd-opencl-dev \
+    # create libOpenCL.so instead of install ocl-icd-opencl-dev
+    && ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so \
     # add users and groups to properly install fah-client.deb
     && useradd -ms /bin/bash fah-client \
     && groupadd -r render \

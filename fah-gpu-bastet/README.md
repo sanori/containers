@@ -1,21 +1,12 @@
 # Folding@home GPU Container for Bastet (FaH client v8.x)
 
 ## TODOs
-- [x] How to set fah-client directory to /fah
-- [x] https://client.foldingathome.org/
-  - By adding https://client.foldingathom.org to allow-origins
-- [x] https://v8-4.foldingathome.org/
-  - [x] How to connect with login
-  - [x] How to connect without login
 - [ ] Writing documents
   - [ ] Bastet concepts (User, Machine, web-client)
   - [ ] Clean run
   - [ ] Bastet test
-- [x] Refactor ROCm installation
-  - [x] Investigate ROCm-docker
-  - [x] Investigate whether the image size can be further reduced
-- [x] docker-compose.yml instead of docker run
-- [x] Make rocm only image support OpenCL
+- [ ] Change ROCm docker supports HIP instead of OpenCL
+- [x] Reduce image size by replacing ocl-icd-opencl-dev
 
 ## Goals
 - Latest Docker image for the new FAH client, bastet (v8.x)
