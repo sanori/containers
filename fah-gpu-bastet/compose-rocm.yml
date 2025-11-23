@@ -1,6 +1,6 @@
 services:
-  fah0:
-    image: foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-rocm
+  client:
+    image: foldingathome/fah-gpu-bastet:rocm
     build:
       context: .
       dockerfile: Dockerfile.amd
@@ -8,6 +8,7 @@ services:
         ROCM_RELEASE: "${ROCM_RELEASE:-6.4.4}"
       tags:
         - "foldingathome/fah-gpu-bastet:rocm${ROCM_RELEASE:-6.4.4}"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-rocm"
         - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-rocm${ROCM_RELEASE:-6.4.4}"
     ports:
       - "7396:7396"
@@ -21,7 +22,7 @@ services:
       - "video"
       - "${RENDER_GID:-render}"
     # Options for setting local directory
-    # user: "$(id -u):$(id -g)"
+    # user: "1000:1000"
     # volumes:
     #  - "/etc/machine-id:/etc/machine-id:ro"
     #  - "${HOME}/fah:/fah"

@@ -1,6 +1,6 @@
 services:
-  fah0:
-    image: foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}
+  client:
+    image: foldingathome/fah-gpu-bastet:cuda-rocm
     build:
       context: .
       args:
@@ -8,6 +8,7 @@ services:
         ROCM_RELEASE: "${ROCM_RELEASE:-6.4.4}"
       tags:
         - "foldingathome/fah-gpu-bastet:cuda${CUDA_RELEASE:-11.7.1}-rocm${ROCM_RELEASE:-6.4.4}"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda-rocm"
         - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda${CUDA_RELEASE:-11.7.1}-rocm${ROCM_RELEASE:-6.4.4}"
     ports:
       - "7396:7396"
@@ -23,7 +24,7 @@ services:
       - "video"
       - "${RENDER_GID:-render}"
     # Options for setting local directory
-    # user: "$(id -u):$(id -g)"
+    # user: "1000:1000"
     # volumes:
     #  - "/etc/machine-id:/etc/machine-id:ro"
     #  - "${HOME}/fah:/fah"

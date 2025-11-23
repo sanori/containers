@@ -55,4 +55,5 @@ WORKDIR "/fah"
 VOLUME ["/fah"]
 EXPOSE 7396
 
-ENTRYPOINT ["fah-client"]
+# allow access outside container (allow option accepts just one entry)
+ENTRYPOINT ["fah-client", "--allow", "0/0", "--http-addresses", "0.0.0.0:7396"]

@@ -6,7 +6,7 @@ ARG CUDA_RELEASE=11.7.1
 FROM nvidia/cuda:${CUDA_RELEASE}-base-ubuntu22.04
 LABEL description="Official Folding@home GPU Container for Bastet"
 
-ARG ROCM_RELEASE=7.1
+ARG ROCM_RELEASE=6.4.4
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -18,8 +18,6 @@ RUN apt-get update \
     # setup OpenCL ICD for nVidia
     && mkdir -p /etc/OpenCL/vendors \
     && echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd \
-    # create libOpenCL.so instead of install ocl-icd-opencl-dev
-    && ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so \
     # get ROCm OpenCL runtime packages
     && mkdir -p --mode=0755 /etc/apt/keyrings \
     && curl -sL https://repo.radeon.com/rocm/rocm.gpg.key | gpg --dearmor > /etc/apt/keyrings/rocm.gpg \
@@ -31,6 +29,8 @@ RUN apt-get update \
       rocm-opencl-runtime \
       rocm-smi-lib \
       rocminfo \
+    # create libOpenCL.so instead of install ocl-icd-opencl-dev
+    && ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/x86_64-linux-gnu/libOpenCL.so \
     # add users and groups to properly install fah-client.deb
     && useradd -ms /bin/bash fah-client \
     && groupadd -r render \
@@ -57,4 +57,5 @@ WORKDIR "/fah"
 VOLUME ["/fah"]
 EXPOSE 7396
 
-ENTRYPOINT ["fah-client"]
+# allow access outside container (allow option accepts just one entry)
+ENTRYPOINT ["fah-client", "--allow", "0/0", "--http-addresses", "0.0.0.0:7396"]
