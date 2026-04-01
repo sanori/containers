@@ -8,8 +8,8 @@ services:
         ROCM_RELEASE: "${ROCM_RELEASE:-6.4.4}"
       tags:
         - "foldingathome/fah-gpu-bastet:rocm${ROCM_RELEASE:-6.4.4}"
-        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-rocm"
-        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-rocm${ROCM_RELEASE:-6.4.4}"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-26.04.0}-rocm"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-26.04.0}-rocm${ROCM_RELEASE:-6.4.4}"
     ports:
       - "7396:7396"
     # Options for AMD ROCm

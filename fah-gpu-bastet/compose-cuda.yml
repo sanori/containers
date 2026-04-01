@@ -8,8 +8,8 @@ services:
         CUDA_RELEASE: "${CUDA_RELEASE:-11.7.1}"
       tags:
         - "foldingathome/fah-gpu-bastet:cuda${CUDA_RELEASE:-11.7.1}"
-        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda"
-        - "foldingathome/fah-gpu-bastet:${VERSION:-25.11.0}-cuda${CUDA_RELEASE:-11.7.1}"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-26.04.0}-cuda"
+        - "foldingathome/fah-gpu-bastet:${VERSION:-26.04.0}-cuda${CUDA_RELEASE:-11.7.1}"
     ports:
       - "7396:7396"
     # Options for nVidia CUDA
