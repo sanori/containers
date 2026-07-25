@@ -34,7 +34,7 @@
 For the nVidia host machine
 ```bash
 # Run container with GPUs, name it "fah0", map user and /fah volume
-docker run --gpus all --name fah0 -d -p 7396:7396 --user "$(id -u):$(id -g)" \
+docker run --gpus all --name fah0 -d -p 127.0.0.1:7396:7396 --user "$(id -u):$(id -g)" \
   -v $HOME/fah:/fah -v /etc/machine-id:/etc/machine-id:ro \
   foldingathome/fah-gpu-bastet:cuda
 ```
@@ -44,7 +44,7 @@ For the AMD GPU host machine
 docker run --device=/dev/kfd --device=/dev/dri \
   --security-opt seccomp=unconfined \
   --group-add video --group-add "$(getent group render | cut -d: -f3)" \
-  --name fah0 -d -p 7396:7396 --user "$(id -u):$(id -g)" \
+  --name fah0 -d -p 127.0.0.1:7396:7396 --user "$(id -u):$(id -g)" \
   -v $HOME/fah:/fah -v /etc/machine-id:/etc/machine-id:ro \
   foldingathome/fah-gpu-bastet:rocm
 ```
@@ -54,7 +54,7 @@ For both
 docker run --gpus all --device=/dev/kfd --device=/dev/dri \
   --security-opt seccomp=unconfined \
   --group-add video --group-add "$(getent group render | cut -d: -f3)" \
-  --name fah0 -d -p 7396:7396 --user "$(id -u):$(id -g)" \
+  --name fah0 -d -p 127.0.0.1:7396:7396 --user "$(id -u):$(id -g)" \
   -v $HOME/fah:/fah -v /etc/machine-id:/etc/machine-id:ro \
   foldingathome/fah-gpu-bastet:cuda-rocm
 ```

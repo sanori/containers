@@ -13,7 +13,7 @@ services:
         - "foldingathome/fah-gpu-bastet:${VERSION:-26.07.0}-cuda-rocm"
         - "foldingathome/fah-gpu-bastet:${VERSION:-26.07.0}-cuda${CUDA_RELEASE:-11.7.1}-rocm${ROCM_RELEASE:-6.4.4}"
     ports:
-      - "7396:7396"
+      - "127.0.0.1:7396:7396"
     # Options for nVidia CUDA
     gpus: all
     # Options for AMD ROCm
