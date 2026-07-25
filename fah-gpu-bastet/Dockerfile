@@ -7,6 +7,11 @@ FROM nvidia/cuda:${CUDA_RELEASE}-base-ubuntu22.04
 LABEL description="Official Folding@home GPU Container for Bastet"
 
 ARG ROCM_RELEASE=6.4.4
+ARG FAH_CLIENT_VERSION
+ARG FAH_CLIENT_SHA256SUM
+# Check if mandatory arguments have been provided
+RUN : "${FAH_CLIENT_VERSION:?FAH_CLIENT_VERSION is required!}"
+RUN : "${FAH_CLIENT_SHA256SUM:?FAH_CLIENT_SHA256SUM is required!}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -39,9 +44,9 @@ RUN apt-get update \
     && chown fah-client:fah-client /fah \
     # download and verify checksum
     && curl -fsSL \
-      https://download.foldingathome.org/releases/public/fah-client/debian-10-64bit/release/fah-client_8.5.6_amd64.deb \
+      https://download.foldingathome.org/releases/public/fah-client/debian-10-64bit/release/fah-client_${FAH_CLIENT_VERSION}_amd64.deb \
       -o fah-client.deb \
-    && echo "643de04033a1cb972a81e3a193d710e919a4f34634a987f11adc4cee61fdaefe fah-client.deb" \
+    && echo "${FAH_CLIENT_SHA256SUM} fah-client.deb" \
       | sha256sum -c --strict - \
     # install and cleanup
     && DEBIAN_FRONTEND=noninteractive dpkg --install --force-depends fah-client.deb \

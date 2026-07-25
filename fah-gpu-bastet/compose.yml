@@ -4,6 +4,8 @@ services:
     build:
       context: .
       args:
+        FAH_CLIENT_VERSION: "${FAH_CLIENT_VERSION}"
+        FAH_CLIENT_SHA256SUM: "${FAH_CLIENT_SHA256SUM}"
         CUDA_RELEASE: "${CUDA_RELEASE:-11.7.1}"
         ROCM_RELEASE: "${ROCM_RELEASE:-6.4.4}"
       tags:

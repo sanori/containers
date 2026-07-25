@@ -6,6 +6,11 @@ FROM ubuntu:22.04
 LABEL description="Folding@home AMD ROCm Container for Bastet"
 
 ARG ROCM_RELEASE=6.4.4
+ARG FAH_CLIENT_VERSION
+ARG FAH_CLIENT_SHA256SUM
+# Check if mandatory arguments have been provided
+RUN : "${FAH_CLIENT_VERSION:?FAH_CLIENT_VERSION is required!}"
+RUN : "${FAH_CLIENT_SHA256SUM:?FAH_CLIENT_SHA256SUM is required!}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

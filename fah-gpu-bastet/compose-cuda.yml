@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile.nvidia
       args:
+        FAH_CLIENT_VERSION: "${FAH_CLIENT_VERSION}"
+        FAH_CLIENT_SHA256SUM: "${FAH_CLIENT_SHA256SUM}"
         CUDA_RELEASE: "${CUDA_RELEASE:-11.7.1}"
       tags:
         - "foldingathome/fah-gpu-bastet:cuda${CUDA_RELEASE:-11.7.1}"

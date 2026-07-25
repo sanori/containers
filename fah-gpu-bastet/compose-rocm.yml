@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile.amd
       args:
+        FAH_CLIENT_VERSION: "${FAH_CLIENT_VERSION}"
+        FAH_CLIENT_SHA256SUM: "${FAH_CLIENT_SHA256SUM}"
         ROCM_RELEASE: "${ROCM_RELEASE:-6.4.4}"
       tags:
         - "foldingathome/fah-gpu-bastet:rocm${ROCM_RELEASE:-6.4.4}"
