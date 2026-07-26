@@ -7,18 +7,18 @@
 - Provides a sandbox testing environment for the new FAH client and core.
 
 
-## Notes
+## Notes for those familiar with fah-client
 
 - GPU drivers must be installed on the host machine since they are part of the OS kernel.
     - nVidia: A package with a name similar to `nvidia-driver-???`
     - AMD: In most cases, these are already included in the base kernel.
-- If using an AMD GPU, pay attention to the `render` group ID associated with `/dev/dri/renderD*` permissions.
-- Unlike FAH client v7, fah-client Bastet does not read `config.xml` after creating `client.db`.
-- You should control fah-client via the [v8-4.foldingathome.org](https://v8-4.foldingathome.org/) web control or `fahctl` command.
+- If you are using an AMD GPU, pay attention to the `render` group ID associated with `/dev/dri/renderD*` permissions.
+- Unlike FAH client v7, **fah-client Bastet does not read `config.xml`** after creating `client.db`.
+- You should control fah-client via the [app.foldingathome.org](https://app.foldingathome.org/) web control or `fahctl` command.
     - Fah-client does not start folding by default.
     - You must enable GPUs and configure the number of CPU cores to use for folding.
-    - For more details, see [V8.4 Client Guide](https://foldingathome.org/guides/v8-4-client-guide/#v8-software-interface).
-- The V8 client recognizes *users* and user *machines* separately.
+    - For more details, see [V8.5 Client Guide](https://foldingathome.org/guides/v8-5#web-control).
+- The V8 client recognizes *users* and their *machines* separately, as it is designed for cases where a single person uses multiple machines.
     - User data: username, team, passkey
     - User machine data: `/etc/machine-id`, machine name, account token
     - If `/etc/machine-id` is changed, previous folding works will be **invalid**.
@@ -91,7 +91,13 @@ RENDER_GID=999  # replace 999 with your machine's render group ID
 
 ## How to build a custom image
 
-You may set the CUDA and ROCm versions by creating the `.env` file, as `docker compose` consults it. Please check the `.env-example` file as an example.
+To build an image, you must provide the `FAH_CLIENT_VERSION` and `FAH_CLIENT_SHA256SUM`
+environment variables to specify which version of fah-client to install.
+If you are unsure about the details, simply copying the `.env-example` file into `.env` is sufficient.
+
+You can also set CUDA and ROCm versions in the `.env` file to build a custom image.
+Note that `docker compose` reads the `.env` file and sets environment variables.
+Please check the `.env-example` file as an example.
 
 For the nVidia host machine
 ```bash
